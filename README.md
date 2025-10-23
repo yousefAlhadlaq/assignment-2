@@ -96,12 +96,3 @@ But I made sure to understand everything before using it. I modified the code in
 - Saving user data (localStorage)
 - Making websites feel smooth and responsive
 
-## 👤 About
-
-**Yousef Alhadlaq**
-Computer Science Student at KFUPM
-
-Interested in cybersecurity and AI. This portfolio showcases my web development skills and serves as a foundation for future projects.
-
-
-*Last updated: October 23, 2025*

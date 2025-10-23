@@ -79,8 +79,6 @@ I fully understand how to:
 - Check time ranges with conditional logic.
 - Update HTML elements with JavaScript.
 
-Could I rebuild this without AI? **Yes.**  
-Could I modify it? **Yes** (could easily add more time periods or change messages).
 
 ### Feature 2: Contact Form
  
@@ -92,8 +90,6 @@ I understand:
 
 The only thing I might need to look up is the exact regex pattern syntax for emails (it's complex).
 
-Could I rebuild this without AI? **Mostly yes** (might need regex reference).  
-Could I modify it? **Definitely yes** (could add new validation rules, change limits, add fields).
 
 ### Feature 3: Animations
  
@@ -103,11 +99,7 @@ I understand:
 - How transitions create smooth effects.
 - How to trigger animations by adding/removing CSS classes.
 
-Could I rebuild this without AI? **Yes.**  
-Could I modify it? **Yes** (could create new animations, adjust timing, add more observers).
 
-## Reflection
-Using AI was extremely helpful for this assignment. It saved me a lot of time and taught me concepts I wouldn't have learned otherwise. The key was making sure I understood everything before using it.
 
 **What worked well:**
 - AI gave me working code with good comments.
