@@ -19,6 +19,8 @@
   <main>
     <section id="about">
       <h1>About Me</h1>
+      <!-- Dynamic greeting element - populated by JavaScript based on current time -->
+      <p id="greeting" class="greeting"></p>
       <p><em>Turning complex risks into intelligent solutions.</em></p>
       <p><em>Hi, I’m Yousef Alhadlaq, a Computer Science student at KFUPM with a strong passion for exploring new technologies and experimenting with creative solutions. I’m especially interested in cybersecurity and artificial intelligence, where I enjoy tackling complex challenges and building adaptive systems. Alongside this, I’m sharpening my skills as a web developer, striving to create impactful digital experiences that are secure, innovative, and future-ready.</em></p>
       <img src="assets/images/IMG_9740.JPG" alt="Your profile" />
@@ -40,12 +42,56 @@
 
     <section id="contact">
       <h2>Contact</h2>
-      <form>
-        <label>Name <input type="text" required></label>
-        <label>Email <input type="email" required></label>
-        <label>Message <textarea required></textarea></label>
-        <button type="submit">Send</button>
+      <form id="contactForm">
+        <!-- Name field with validation indicator -->
+        <div class="form-field">
+          <label for="contactName">
+            Name
+            <span class="validation-icon" id="nameValidation"></span>
+          </label>
+          <input type="text" id="contactName" name="name" required minlength="2">
+          <span class="error-message" id="nameError"></span>
+        </div>
+
+        <!-- Email field with validation indicator -->
+        <div class="form-field">
+          <label for="contactEmail">
+            Email
+            <span class="validation-icon" id="emailValidation"></span>
+          </label>
+          <input type="email" id="contactEmail" name="email" required>
+          <span class="error-message" id="emailError"></span>
+        </div>
+
+        <!-- Message field with validation indicator and character counter -->
+        <div class="form-field">
+          <label for="contactMessage">
+            Message
+            <span class="validation-icon" id="messageValidation"></span>
+          </label>
+          <textarea id="contactMessage" name="message" required minlength="10" maxlength="500"></textarea>
+          <div class="message-meta">
+            <span class="error-message" id="messageError"></span>
+            <span class="char-counter" id="charCounter">0 / 500 characters</span>
+          </div>
+        </div>
+
+        <!-- Auto-save indicator -->
+        <div class="form-status">
+          <span class="draft-indicator" id="draftIndicator"></span>
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" id="submitBtn">Send</button>
       </form>
+
+      <!-- Success message (hidden by default) -->
+      <div class="success-message" id="successMessage">
+        <div class="success-icon">✓</div>
+        <h3>Message Sent Successfully!</h3>
+        <p>Thank you for reaching out. I'll get back to you soon.</p>
+        <button id="sendAnotherBtn">Send Another Message</button>
+      </div>
     </section>
   </main>
 

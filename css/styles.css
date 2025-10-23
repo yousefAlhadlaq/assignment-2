@@ -1,9 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 *{box-sizing:border-box;margin:0}
 html,body{height:100%}
+
+/* Smooth scrolling for entire page */
+html{scroll-behavior:smooth}
+
 :root{--bg:#fff7f6;--surface:#ffffff;--text:#121212;--muted:#6b7280;--primary:#ff6b6b;--primary-600:#ff5252;--accent:#7c4dff;--card:#ffffff;--border:#f0e6e6;--shadow:0 10px 30px rgba(17,24,39,.08)}
 [data-theme="dark"]{--bg:#0f1115;--surface:#101218;--text:#f3f4f6;--muted:#a1a1aa;--primary:#ff6b6b;--primary-600:#ff4b4b;--accent:#9d8cff;--card:#0b0d12;--border:#1f2430;--shadow:0 10px 30px rgba(0,0,0,.35)}
 body{font-family:Poppins,system-ui, sans-serif;line-height:1.7;background:radial-gradient(1200px 600px at -10% 5%, rgba(255,107,107,.08), transparent 60%),radial-gradient(800px 500px at 110% 10%, rgba(124,77,255,.08), transparent 60%),var(--bg);color:var(--text)}
+
+/* ============================================================================
+   SCROLL ANIMATIONS - Sections fade in when scrolled into view
+   ============================================================================ */
+
+/* Default state: sections are hidden and shifted down */
+section{opacity:0;transform:translateY(30px);transition:opacity .8s ease, transform .8s ease}
+
+/* When section becomes visible (added by Intersection Observer) */
+section.visible{opacity:1;transform:translateY(0)}
+
+/* Stagger animations for child elements */
+section.visible > *{animation:fadeInUp .6s ease forwards}
+section.visible > *:nth-child(2){animation-delay:.1s}
+section.visible > *:nth-child(3){animation-delay:.2s}
+section.visible > *:nth-child(4){animation-delay:.3s}
+section.visible > *:nth-child(5){animation-delay:.4s}
 
 /* Layout helpers */
 header,main,footer{width:100%}
@@ -11,12 +32,22 @@ nav,section{max-width:1120px;margin:0 auto}
 section{padding:3rem 1.25rem}
 
 /* Top navigation - clean, sticky bar */
-header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.65);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.65);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--border);animation:slideDown .5s ease}
 [data-theme="dark"] header{background:rgba(16,18,24,.6)}
 nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:.9rem 1rem}
-nav a{color:var(--text);text-decoration:none;font-weight:600;opacity:.8;transition:opacity .2s ease,color .2s ease}
-nav a:hover{opacity:1;color:var(--primary)}
-#themeToggle{border:0;background:var(--text);color:var(--bg);padding:.55rem .8rem;border-radius:999px;cursor:pointer;font-weight:700;box-shadow:var(--shadow)}
+
+/* Navigation links with smooth transitions */
+nav a{color:var(--text);text-decoration:none;font-weight:600;opacity:.8;transition:opacity .3s ease, color .3s ease, transform .3s ease;position:relative;display:inline-block}
+nav a:hover{opacity:1;color:var(--primary);transform:translateY(-2px)}
+
+/* Underline effect on hover */
+nav a::after{content:"";position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--primary);transition:width .3s ease}
+nav a:hover::after{width:100%}
+
+/* Theme toggle button with enhanced animations */
+#themeToggle{border:0;background:var(--text);color:var(--bg);padding:.55rem .8rem;border-radius:999px;cursor:pointer;font-weight:700;box-shadow:var(--shadow);transition:transform .3s ease, box-shadow .3s ease, background .3s ease;position:relative}
+#themeToggle:hover{transform:scale(1.1) rotate(15deg);box-shadow:0 12px 35px rgba(17,24,39,.15)}
+#themeToggle:active{transform:scale(.95)}
 [data-theme="dark"] #themeToggle{background:var(--primary);color:#111}
 
 /* Hero (About) */
@@ -24,11 +55,15 @@ nav a:hover{opacity:1;color:var(--primary)}
 #about h1{font-size:clamp(2.25rem,4.5vw,3.25rem);line-height:1.1;margin-bottom:.5rem;position:relative}
 #about h1::after{content:"";position:absolute;left:0;bottom:-8px;width:200px;height:6px;border-radius:6px;background:linear-gradient(90deg,var(--primary),var(--accent))}
 #about p{color:var(--muted);max-width:70ch}
+/* Dynamic greeting styling */
+.greeting{font-size:clamp(1.35rem,2.5vw,1.75rem);font-weight:700;color:var(--text);background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.75rem;animation:fadeIn 1s ease-in-out}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 /* Tagline chip (first paragraph) */
 #about p:first-of-type em{display:inline-block;padding:.5rem .9rem;border-radius:999px;background:color-mix(in oklab, var(--primary) 12%, var(--surface));border:1px solid var(--border);color:var(--primary);font-style:normal;font-weight:700;box-shadow:var(--shadow)}
 /* Lead paragraph (last paragraph) highlighted card */
 #about p:last-of-type em{display:block;background:var(--card);border:1px solid var(--border);border-left:6px solid var(--primary);padding:1.1rem 1.25rem;border-radius:14px;color:var(--muted);font-style:normal;font-weight:500;box-shadow:var(--shadow);line-height:1.85}
-#about img{width:100%;max-width:440px;justify-self:end;aspect-ratio:1/1.05;object-fit:cover;border-radius:18px;box-shadow:var(--shadow),0 0 0 6px rgba(255,255,255,.5);position:relative;z-index:1}
+#about img{width:100%;max-width:440px;justify-self:end;aspect-ratio:1/1.05;object-fit:cover;border-radius:18px;box-shadow:var(--shadow),0 0 0 6px rgba(255,255,255,.5);position:relative;z-index:1;transition:transform .5s ease, box-shadow .5s ease}
+#about img:hover{transform:scale(1.05) rotate(2deg);box-shadow:0 20px 50px rgba(17,24,39,.2),0 0 0 6px rgba(255,255,255,.7)}
 /* Extra photos around the portrait using background images (no HTML changes) */
 #about{position:relative}
 #about::before{content:"";position:absolute;right:1.25rem;top:1.75rem;width:140px;height:110px;background:url('../assets/images/KFUPM_LOGO.jpg') center/cover no-repeat;border-radius:14px;transform:rotate(4deg);z-index:0;box-shadow:var(--shadow)}
@@ -37,31 +72,135 @@ nav a:hover{opacity:1;color:var(--primary)}
 /* Projects */
 #projects h2,#contact h2{font-size:clamp(1.5rem,2.5vw,2rem);margin-bottom:1rem}
 #projects{position:relative}
-#projects article{padding:1.25rem;border:1px solid var(--border);border-radius:14px;margin:.75rem 0;background:var(--card);box-shadow:var(--shadow);transition:transform .2s ease, box-shadow .2s ease}
-#projects article:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(17,24,39,.12)}
-#projects h3{margin-bottom:.4rem}
-#projects p{color:var(--muted)}
-/* project images */
-#projects article img{width:100%;height:200px;object-fit:cover;border-radius:10px;margin-top:.75rem}
+
+/* Enhanced project cards with smooth animations */
+#projects article{padding:1.25rem;border:1px solid var(--border);border-radius:14px;margin:.75rem 0;background:var(--card);box-shadow:var(--shadow);transition:transform .4s ease, box-shadow .4s ease, border-color .4s ease;position:relative;overflow:hidden}
+
+/* Hover effect: lift card with enhanced shadow */
+#projects article:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 20px 50px rgba(17,24,39,.18);border-color:var(--primary)}
+
+/* Subtle gradient overlay on hover */
+#projects article::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg, rgba(255,107,107,.03), rgba(124,77,255,.03));opacity:0;transition:opacity .4s ease;pointer-events:none}
+#projects article:hover::before{opacity:1}
+
+#projects h3{margin-bottom:.4rem;transition:color .3s ease}
+#projects article:hover h3{color:var(--primary)}
+
+#projects p{color:var(--muted);transition:color .3s ease}
+#projects article:hover p{color:var(--text)}
+
+/* Project images with zoom effect */
+#projects article img{width:100%;height:200px;object-fit:cover;border-radius:10px;margin-top:.75rem;transition:transform .5s ease, filter .5s ease}
+#projects article:hover img{transform:scale(1.08);filter:brightness(1.05)}
 
 
 
 /* Contact form - enhanced card styling */
 #contact form{background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);padding:1.25rem;border-radius:16px;display:grid;gap:1rem}
-#contact label{display:grid;gap:.5rem;color:var(--muted);font-weight:600}
+
+/* Form field wrapper */
+.form-field{display:grid;gap:.5rem}
+
+/* Label styling with validation icon */
+#contact label{display:flex;align-items:center;justify-content:space-between;gap:.5rem;color:var(--muted);font-weight:600}
+
+/* Validation icons (✅ ❌) */
+.validation-icon{font-size:1.1rem;margin-left:auto;transition:transform .2s ease}
+.validation-icon.valid{animation:scaleIn .3s ease}
+.validation-icon.invalid{animation:shake .4s ease}
+
+/* Input and textarea base styles */
 #contact input,#contact textarea,#contact button[type="submit"]{font:inherit}
-#contact input,#contact textarea{padding:.95rem 1rem;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text);outline:none;transition:border-color .2s ease, box-shadow .2s ease, background .2s ease}
+#contact input,#contact textarea{padding:.95rem 1rem;border-radius:12px;border:2px solid var(--border);background:var(--surface);color:var(--text);outline:none;transition:border-color .2s ease, box-shadow .2s ease, background .2s ease}
 #contact input::placeholder,#contact textarea::placeholder{color:color-mix(in oklab, var(--muted) 70%, transparent)}
+
+/* Focus states */
 #contact input:focus,#contact textarea:focus{border-color:var(--primary);box-shadow:0 0 0 4px color-mix(in oklab, var(--primary) 18%, transparent)}
-#contact input:invalid,#contact textarea:invalid{border-color:color-mix(in oklab, var(--primary) 60%, var(--border));}
+
+/* Validation states - valid (green border) */
+#contact input.valid,#contact textarea.valid{border-color:#10b981;background:color-mix(in oklab, #10b981 5%, var(--surface))}
+
+/* Validation states - invalid (red border) */
+#contact input.invalid,#contact textarea.invalid{border-color:#ef4444;background:color-mix(in oklab, #ef4444 5%, var(--surface))}
+
+/* Error messages */
+.error-message{color:#ef4444;font-size:.85rem;font-weight:500;display:none;animation:slideDown .3s ease}
+
+/* Character counter */
+.char-counter{font-size:.85rem;color:var(--muted);text-align:right;font-weight:500;transition:color .2s ease}
+.char-counter.warning{color:#f59e0b}
+.char-counter.danger{color:#ef4444;font-weight:700}
+
+/* Message field metadata (error + counter) */
+.message-meta{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+
+/* Draft indicator */
+.form-status{min-height:1.5rem;display:flex;align-items:center;justify-content:flex-end}
+.draft-indicator{font-size:.85rem;color:#10b981;font-weight:600;opacity:0;transform:translateY(-5px);transition:opacity .3s ease, transform .3s ease}
+.draft-indicator.visible{opacity:1;transform:translateY(0)}
+
+/* Textarea specific */
 #contact textarea{min-height:140px;resize:vertical}
+
+/* Submit button base */
 #contact button[type="submit"]{justify-self:start;background:linear-gradient(135deg,var(--primary),var(--primary-600));color:white;border:0;padding:.95rem 1.2rem;border-radius:12px;font-weight:700;cursor:pointer;box-shadow:var(--shadow);transition:filter .15s ease, transform .15s ease}
-#contact button[type="submit"]:hover{filter:brightness(1.05);transform:translateY(-1px)}
+#contact button[type="submit"]:hover:not(:disabled){filter:brightness(1.05);transform:translateY(-1px)}
+
+/* Loading button state */
+#contact button[type="submit"].loading{background:var(--muted);cursor:wait;position:relative}
+#contact button[type="submit"].loading::after{content:"";position:absolute;right:.8rem;top:50%;transform:translateY(-50%);width:14px;height:14px;border:2px solid white;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite}
+
+/* Error shake animation on button */
+#contact button[type="submit"].error-shake{background:#ef4444;animation:shake .4s ease}
+
+/* Disabled button */
+#contact button[type="submit"]:disabled{opacity:.6;cursor:not-allowed}
+
+/* Success message - hidden by default */
+.success-message{display:none;background:var(--card);border:2px solid #10b981;border-radius:16px;padding:2.5rem 2rem;text-align:center;box-shadow:var(--shadow);animation:slideUp .5s ease}
+.success-message.show{display:block}
+
+/* Success icon */
+.success-icon{width:80px;height:80px;margin:0 auto 1.5rem;background:linear-gradient(135deg,#10b981,#059669);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:3rem;font-weight:700;box-shadow:0 8px 20px rgba(16,185,129,.3);animation:scaleIn .5s ease .2s backwards}
+
+/* Success message text */
+.success-message h3{color:var(--text);font-size:1.5rem;margin-bottom:.5rem}
+.success-message p{color:var(--muted);margin-bottom:1.5rem}
+
+/* Send another button */
+#sendAnotherBtn{background:var(--primary);color:white;border:0;padding:.95rem 1.5rem;border-radius:12px;font-weight:700;cursor:pointer;font-size:1rem;transition:filter .15s ease, transform .15s ease;box-shadow:var(--shadow)}
+#sendAnotherBtn:hover{filter:brightness(1.05);transform:translateY(-1px)}
+
+/* ============================================================================
+   ANIMATIONS
+   ============================================================================ */
+
+/* Scale in animation for validation icons */
+@keyframes scaleIn{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+
+/* Shake animation for errors */
+@keyframes shake{0%,100%{transform:translateX(0)}10%,30%,50%,70%,90%{transform:translateX(-5px)}20%,40%,60%,80%{transform:translateX(5px)}}
+
+/* Slide down animation for error messages */
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Slide up animation for success message */
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* Spin animation for loading button */
+@keyframes spin{to{transform:translateY(-50%) rotate(360deg)}}
+
+/* Fade in and slide up animation for sections */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* Slide down animation for header */
+@keyframes slideDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
 
 /* Responsive layout for contact form */
 @media (min-width:720px){
   #contact form{grid-template-columns:1fr 1fr}
-  #contact form label:nth-child(3){grid-column:1/-1}
+  #contact form .form-field:nth-child(3){grid-column:1/-1}
+  #contact form .form-status{grid-column:1/-1}
   #contact form button[type="submit"]{grid-column:1/-1}
 }
 
@@ -79,4 +218,26 @@ nav a:hover{opacity:1;color:var(--primary)}
 
 @media (min-width:1024px){
   #about{grid-template-columns:1fr 1fr}
+}
+
+/* ============================================================================
+   ACCESSIBILITY - Respect user's motion preferences
+   ============================================================================ */
+
+/* Disable all animations and transitions for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce){
+  /* Disable smooth scroll */
+  html{scroll-behavior:auto}
+
+  /* Remove all transitions and animations */
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+
+  /* Keep sections visible (no fade-in) */
+  section{opacity:1;transform:none}
+
+  /* Remove hover transforms but keep color changes */
+  nav a:hover,#themeToggle:hover,#projects article:hover,#about img:hover{transform:none}
+
+  /* Keep functional hover effects (colors, shadows) but remove motion */
+  #projects article:hover{transform:none;box-shadow:0 20px 50px rgba(17,24,39,.18)}
 }
