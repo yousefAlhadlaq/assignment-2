@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+:root{--bg:#fff7f6;--surface:#ffffff;--text:#121212;--muted:#6b7280;--primary:#ff6b6b;--primary-600:#ff5252;--accent:#7c4dff;--card:#ffffff;--border:#f0e6e6;--shadow:0 10px 30px rgba(17,24,39,.08)}
+[data-theme="dark"]{--bg:#0f1115;--surface:#101218;--text:#f3f4f6;--muted:#a1a1aa;--primary:#ff6b6b;--primary-600:#ff4b4b;--accent:#9d8cff;--card:#0b0d12;--border:#1f2430;--shadow:0 10px 30px rgba(0,0,0,.35)}
+body{font-family:Poppins,system-ui, sans-serif;line-height:1.7;background:radial-gradient(1200px 600px at -10% 5%, rgba(255,107,107,.08), transparent 60%),radial-gradient(800px 500px at 110% 10%, rgba(124,77,255,.08), transparent 60%),var(--bg);color:var(--text)}
+
+/* Layout helpers */
+header,main,footer{width:100%}
+nav,section{max-width:1120px;margin:0 auto}
+section{padding:3rem 1.25rem}
+
+/* Top navigation - clean, sticky bar */
+header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.65);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+[data-theme="dark"] header{background:rgba(16,18,24,.6)}
+nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:.9rem 1rem}
+nav a{color:var(--text);text-decoration:none;font-weight:600;opacity:.8;transition:opacity .2s ease,color .2s ease}
+nav a:hover{opacity:1;color:var(--primary)}
+#themeToggle{border:0;background:var(--text);color:var(--bg);padding:.55rem .8rem;border-radius:999px;cursor:pointer;font-weight:700;box-shadow:var(--shadow)}
+[data-theme="dark"] #themeToggle{background:var(--primary);color:#111}
+
+/* Hero (About) */
+#about{display:grid;gap:2.25rem;align-items:center}
+#about h1{font-size:clamp(2.25rem,4.5vw,3.25rem);line-height:1.1;margin-bottom:.5rem;position:relative}
+#about h1::after{content:"";position:absolute;left:0;bottom:-8px;width:200px;height:6px;border-radius:6px;background:linear-gradient(90deg,var(--primary),var(--accent))}
+#about p{color:var(--muted);max-width:70ch}
+/* Tagline chip (first paragraph) */
+#about p:first-of-type em{display:inline-block;padding:.5rem .9rem;border-radius:999px;background:color-mix(in oklab, var(--primary) 12%, var(--surface));border:1px solid var(--border);color:var(--primary);font-style:normal;font-weight:700;box-shadow:var(--shadow)}
+/* Lead paragraph (last paragraph) highlighted card */
+#about p:last-of-type em{display:block;background:var(--card);border:1px solid var(--border);border-left:6px solid var(--primary);padding:1.1rem 1.25rem;border-radius:14px;color:var(--muted);font-style:normal;font-weight:500;box-shadow:var(--shadow);line-height:1.85}
+#about img{width:100%;max-width:440px;justify-self:end;aspect-ratio:1/1.05;object-fit:cover;border-radius:18px;box-shadow:var(--shadow),0 0 0 6px rgba(255,255,255,.5);position:relative;z-index:1}
+/* Extra photos around the portrait using background images (no HTML changes) */
+#about{position:relative}
+#about::before{content:"";position:absolute;right:1.25rem;top:1.75rem;width:140px;height:110px;background:url('../assets/images/KFUPM_LOGO.jpg') center/cover no-repeat;border-radius:14px;transform:rotate(4deg);z-index:0;box-shadow:var(--shadow)}
+#about::after{content:"";position:absolute;right:7rem;top:5rem;width:130px;height:100px;background:url('../assets/images/ics_department.jpg') center/cover no-repeat;border-radius:14px;transform:rotate(-6deg);z-index:0;box-shadow:var(--shadow)}
+
+/* Projects */
+#projects h2,#contact h2{font-size:clamp(1.5rem,2.5vw,2rem);margin-bottom:1rem}
+#projects{position:relative}
+#projects article{padding:1.25rem;border:1px solid var(--border);border-radius:14px;margin:.75rem 0;background:var(--card);box-shadow:var(--shadow);transition:transform .2s ease, box-shadow .2s ease}
+#projects article:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(17,24,39,.12)}
+#projects h3{margin-bottom:.4rem}
+#projects p{color:var(--muted)}
+/* project images */
+#projects article img{width:100%;height:200px;object-fit:cover;border-radius:10px;margin-top:.75rem}
+
+
+
+/* Contact form - enhanced card styling */
+#contact form{background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);padding:1.25rem;border-radius:16px;display:grid;gap:1rem}
+#contact label{display:grid;gap:.5rem;color:var(--muted);font-weight:600}
+#contact input,#contact textarea,#contact button[type="submit"]{font:inherit}
+#contact input,#contact textarea{padding:.95rem 1rem;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text);outline:none;transition:border-color .2s ease, box-shadow .2s ease, background .2s ease}
+#contact input::placeholder,#contact textarea::placeholder{color:color-mix(in oklab, var(--muted) 70%, transparent)}
+#contact input:focus,#contact textarea:focus{border-color:var(--primary);box-shadow:0 0 0 4px color-mix(in oklab, var(--primary) 18%, transparent)}
+#contact input:invalid,#contact textarea:invalid{border-color:color-mix(in oklab, var(--primary) 60%, var(--border));}
+#contact textarea{min-height:140px;resize:vertical}
+#contact button[type="submit"]{justify-self:start;background:linear-gradient(135deg,var(--primary),var(--primary-600));color:white;border:0;padding:.95rem 1.2rem;border-radius:12px;font-weight:700;cursor:pointer;box-shadow:var(--shadow);transition:filter .15s ease, transform .15s ease}
+#contact button[type="submit"]:hover{filter:brightness(1.05);transform:translateY(-1px)}
+
+/* Responsive layout for contact form */
+@media (min-width:720px){
+  #contact form{grid-template-columns:1fr 1fr}
+  #contact form label:nth-child(3){grid-column:1/-1}
+  #contact form button[type="submit"]{grid-column:1/-1}
+}
+
+/* Utilities */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* Responsive layout adjustments */
+@media (min-width:720px){
+  #projects{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  #projects h2{grid-column:1/-1}
+  #about{grid-template-columns:1.2fr .8fr}
+  #about > h1,#about > p{grid-column:1}
+  #about > img{grid-column:2;justify-self:end}
+}
+
+@media (min-width:1024px){
+  #about{grid-template-columns:1fr 1fr}
+}
